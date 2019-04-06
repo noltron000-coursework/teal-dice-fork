@@ -1,8 +1,11 @@
+// TODO: what does this do?
 "use strict";
 
+// TODO: what does this do?
 window.teal = {};
 window.$t = window.teal;
 
+// TODO: what does this do?
 teal.copyto = function(obj, res) {
 	if (obj == null || typeof obj !== 'object') return obj;
 	if (obj instanceof Array) {
@@ -18,11 +21,13 @@ teal.copyto = function(obj, res) {
 	return res;
 }
 
+// TODO: what does this do?
 teal.copy = function(obj) {
 	if (!obj) return obj;
 	return teal.copyto(obj, new obj.constructor());
 }
 
+// TODO: what does this do?
 teal.element = function(name, props, place) {
 	var dom = document.createElement(name);
 	if (props) for (var i in props) dom.setAttribute(i, props[i]);
@@ -30,19 +35,23 @@ teal.element = function(name, props, place) {
 	return dom;
 }
 
+// TODO: what does this do?
 teal.inner = function(obj, sel) {
 	sel.appendChild(typeof obj == 'string' ? document.createTextNode(obj) : obj);
 }
 
+// TODO: what does this do?
 teal.id = function(id) {
 	return document.getElementById(id);
 }
 
+// TODO: what does this do?
 teal.set = function(sel, props) {
 	for (var i in props) sel.setAttribute(i, props[i]);
 	return sel;
 }
 
+// TODO: what does this do?
 teal.clas = function(sel, oldclass, newclass) {
 	var oc = oldclass ? oldclass.split(/\s+/) : [],
 		nc = newclass ? newclass.split(/\s+/) : [],
@@ -58,12 +67,14 @@ teal.clas = function(sel, oldclass, newclass) {
 	sel.setAttribute('class', classes.join(' '));
 }
 
+// TODO: what does this do?
 teal.empty = function(sel) {
 	if (sel.childNodes)
 		while (sel.childNodes.length)
 			sel.removeChild(sel.firstChild);
 }
 
+// TODO: what does this do?
 teal.remove = function(sel) {
 	if (sel) {
 		if (sel.parentNode) sel.parentNode.removeChild(sel);
@@ -72,6 +83,7 @@ teal.remove = function(sel) {
 	}
 }
 
+// TODO: what does this do?
 teal.bind = function(sel, eventname, func, bubble) {
 	if (eventname.constructor === Array) {
 		for (var i in eventname)
@@ -81,6 +93,7 @@ teal.bind = function(sel, eventname, func, bubble) {
 		sel.addEventListener(eventname, func, bubble ? bubble : false);
 }
 
+// TODO: what does this do?
 teal.unbind = function(sel, eventname, func, bubble) {
 	if (eventname.constructor === Array) {
 		for (var i in eventname)
@@ -90,6 +103,7 @@ teal.unbind = function(sel, eventname, func, bubble) {
 		sel.removeEventListener(eventname, func, bubble ? bubble : false);
 }
 
+// TODO: what does this do?
 teal.one = function(sel, eventname, func, bubble) {
 	var one_func = function(e) {
 		func.call(this, e);
@@ -98,6 +112,7 @@ teal.one = function(sel, eventname, func, bubble) {
 	teal.bind(sel, eventname, one_func, bubble);
 }
 
+// TODO: what does this do?
 teal.raise_event = function(sel, eventname, bubble, cancelable) {
 	var evt = document.createEvent('UIEvents');
 	evt.initEvent(eventname, bubble == undefined ? true : bubble,
@@ -105,7 +120,9 @@ teal.raise_event = function(sel, eventname, bubble, cancelable) {
 	sel.dispatchEvent(evt);
 }
 
+// TODO: what does this do?
 if (!document.getElementsByClassName) {
+	// TODO: what does this do?
 	teal.get_elements_by_class = function(classes, node) {
 		var node = node || document,
 			list = node.getElementsByTagName('*'),
@@ -125,11 +142,13 @@ if (!document.getElementsByClassName) {
 	}
 }
 else {
+	// TODO: what does this do?
 	teal.get_elements_by_class = function(classes, node) {
 		return (node || document).getElementsByClassName(classes);
 	}
 }
 
+// TODO: what does this do?
 teal.rpc = function(params, callback) {
 	var ajax = new XMLHttpRequest(), ret;
 	ajax.open("post", 'f', true);
@@ -140,6 +159,7 @@ teal.rpc = function(params, callback) {
 	ajax.send(JSON.stringify(params));
 }
 
+// TODO: what does this do?
 teal.uuid = function() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -147,6 +167,7 @@ teal.uuid = function() {
 	});
 }
 
+// TODO: what does this do?
 teal.get_url_params = function() {
 	var params = window.location.search.substring(1).split("&");
 	var res = {};
@@ -157,6 +178,7 @@ teal.get_url_params = function() {
 	return res;
 }
 
+// TODO: what does this do?
 teal.get_mouse_coords = function(ev) {
 	var touches = ev.changedTouches;
 	if (touches) return { x: touches[0].clientX, y: touches[0].clientY };

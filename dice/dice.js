@@ -1,11 +1,14 @@
+// TODO: what does this do?
 "use strict";
 
+// TODO: what does this do? why is it behind a '('?
 (function(dice) {
 
 	var random_storage = [];
 	this.use_true_random = true;
 	this.frame_rate = 1 / 60;
 
+	// TODO: what does this do?
 	function prepare_rnd(callback) {
 		if (!random_storage.length && $t.dice.use_true_random) {
 			try {
@@ -23,10 +26,12 @@
 		callback();
 	}
 
+	// TODO: what does this do?
 	function rnd() {
 		return random_storage.length ? random_storage.pop() : Math.random();
 	}
 
+	// TODO: what does this do?
 	function create_shape(vertices, faces, radius) {
 		var cv = new Array(vertices.length), cf = new Array(faces.length);
 		for (var i = 0; i < vertices.length; ++i) {
@@ -39,6 +44,7 @@
 		return new CANNON.ConvexPolyhedron(cv, cf);
 	}
 
+	// TODO: what does this do?
 	function make_geom(vertices, faces, radius, tab, af) {
 		var geom = new THREE.Geometry();
 		for (var i = 0; i < vertices.length; ++i) {
@@ -65,6 +71,7 @@
 		return geom;
 	}
 
+	// TODO: what does this do?
 	function chamfer_geom(vectors, faces, chamfer) {
 		var chamfer_vectors = [], chamfer_faces = [], corner_faces = new Array(vectors.length);
 		for (var i = 0; i < vectors.length; ++i) corner_faces[i] = [];
@@ -125,6 +132,7 @@
 		return { vectors: chamfer_vectors, faces: chamfer_faces };
 	}
 
+	// TODO: what does this do? important
 	function create_geom(vertices, faces, radius, tab, af, chamfer) {
 		var vectors = new Array(vertices.length);
 		for (var i = 0; i < vertices.length; ++i) {
@@ -132,7 +140,7 @@
 		}
 		var cg = chamfer_geom(vectors, faces, chamfer);
 		var geom = make_geom(cg.vectors, cg.faces, radius, tab, af);
-		//var geom = make_geom(vectors, faces, radius, tab, af); // Without chamfer
+		// var geom = make_geom(vectors, faces, radius, tab, af); // Without chamfer
 		geom.cannon_shape = create_shape(vectors, faces, radius);
 		return geom;
 	}
@@ -142,10 +150,12 @@
 	this.standart_d100_dice_face_labels = [' ', '00', '10', '20', '30', '40', '50',
 			'60', '70', '80', '90'];
 
+	// TODO: what does this do?
 	function calc_texture_size(approx) {
 		return Math.pow(2, Math.floor(Math.log(approx) / Math.log(2)));
 	}
 
+	// TODO: what does this do? why is this function different?
 	this.create_dice_materials = function(face_labels, size, margin) {
 		function create_text_texture(text, color, back_color) {
 			if (text == undefined) return null;
@@ -174,6 +184,7 @@
 		return materials;
 	}
 
+	// TODO: what does this do? why is this function different?
 	this.create_d4_materials = function(size, margin) {
 		function create_d4_text(text, color, back_color) {
 			var canvas = document.createElement("canvas");
@@ -204,6 +215,8 @@
 						{ map: create_d4_text(labels[i], this.label_color, this.dice_color) })));
 		return materials;
 	}
+
+	// CREATE DISCRETE GEOMETRY
 
 	this.create_d4_geometry = function(radius) {
 		var vertices = [[1, 1, 1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1]];
@@ -263,6 +276,7 @@
 		return create_geom(vertices, faces, radius, -0.2, -Math.PI / 4 / 2, 0.955);
 	}
 
+	// TODO: what does this do?
 	this.material_options = {
 		specular: 0x172022,
 		color: 0xf0f0f0,
@@ -283,6 +297,8 @@
 	this.dice_inertia = { 'd4': 5, 'd6': 13, 'd8': 10, 'd10': 9, 'd12': 8, 'd20': 6, 'd100': 9 };
 
 	this.scale = 50;
+
+	// TODO: what does this do?
 
 	this.create_d4 = function() {
 		if (!this.d4_geometry) this.d4_geometry = this.create_d4_geometry(this.scale * 1.2);
@@ -333,6 +349,7 @@
 		return new THREE.Mesh(this.d10_geometry, this.d100_material);
 	}
 
+	// TODO: what does this do?
 	this.parse_notation = function(notation) {
 		var no = notation.split('@');
 		var dr0 = /\s*(\d*)([a-z]+)(\d+)(\s*\+\s*(\d+)){0,1}\s*(\+|$)/gi;
@@ -354,6 +371,7 @@
 		return ret;
 	}
 
+	// TODO: what does this do?
 	this.stringify_notation = function(nn) {
 		var dict = {}, notation = '';
 		for (var i in nn.set)
@@ -366,8 +384,10 @@
 		return notation;
 	}
 
+	// TODO: what does this do?
 	var that = this;
 
+	// TODO: what does this do?
 	this.dice_box = function(container, dimentions) {
 		this.use_adapvite_timestep = true;
 		this.animate_selector = true;
@@ -405,6 +425,9 @@
 
 		this.world.add(new CANNON.RigidBody(0, new CANNON.Plane(), desk_body_material));
 		var barrier;
+
+		// TODO: what does this do?
+		// are these the planes/walls?
 		barrier = new CANNON.RigidBody(0, new CANNON.Plane(), barrier_body_material);
 		barrier.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
 		barrier.position.set(0, this.h * 0.93, 0);
@@ -431,6 +454,7 @@
 		this.renderer.render(this.scene, this.camera);
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.reinit = function(container, dimentions) {
 		this.cw = container.clientWidth / 2;
 		this.ch = container.clientHeight / 2;
@@ -477,6 +501,7 @@
 		this.renderer.render(this.scene, this.camera);
 	}
 
+	// TODO: what does this do?
 	function make_random_vector(vector) {
 		var random_angle = rnd() * Math.PI / 5 - Math.PI / 5 / 2;
 		var vec = {
@@ -488,6 +513,7 @@
 		return vec;
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.generate_vectors = function(notation, vector, boost) {
 		var vectors = [];
 		for (var i in notation.set) {
@@ -513,6 +539,7 @@
 		return vectors;
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.create_dice = function(type, pos, velocity, angle, axis) {
 		var dice = that['create_' + type]();
 		dice.castShadow = true;
@@ -530,6 +557,7 @@
 		this.world.add(dice.body);
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.check_if_throw_finished = function() {
 		var res = true;
 		var e = 6;
@@ -558,6 +586,7 @@
 		return res;
 	}
 
+	// TODO: what does this do?
 	function get_dice_value(dice) {
 		var vector = new THREE.Vector3(0, 0, dice.dice_type == 'd4' ? -1 : 1);
 		var closest_face, closest_angle = Math.PI * 2;
@@ -575,6 +604,7 @@
 		return matindex;
 	}
 
+	// TODO: what does this do?
 	function get_dice_values(dices) {
 		var values = [];
 		for (var i = 0, l = dices.length; i < l; ++i) {
@@ -583,6 +613,7 @@
 		return values;
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.emulate_throw = function() {
 		while (!this.check_if_throw_finished()) {
 			++this.iteration;
@@ -591,6 +622,7 @@
 		return get_dice_values(this.dices);
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.__animate = function(threadid) {
 		var time = (new Date()).getTime();
 		var time_diff = (time - this.last_time) / 1000;
@@ -630,6 +662,7 @@
 		}
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.clear = function() {
 		this.running = false;
 		var dice;
@@ -643,6 +676,7 @@
 		setTimeout(function() { box.renderer.render(box.scene, box.camera); }, 100);
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.prepare_dices_for_roll = function(vectors) {
 		this.clear();
 		this.iteration = 0;
@@ -652,6 +686,7 @@
 		}
 	}
 
+	// TODO: what does this do?
 	function shift_dice_faces(dice, value, res) {
 		var r = that.dice_face_range[dice.dice_type];
 		if (!(value >= r[0] && value <= r[1])) return;
@@ -668,6 +703,7 @@
 		dice.geometry = geom;
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.roll = function(vectors, values, callback) {
 		this.prepare_dices_for_roll(vectors);
 		if (values != undefined && values.length) {
@@ -683,6 +719,7 @@
 		this.__animate(this.running);
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.__selector_animate = function(threadid) {
 		var time = (new Date()).getTime();
 		var time_diff = (time - this.last_time) / 1000;
@@ -703,6 +740,7 @@
 		}
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.search_dice_by_mouse = function(ev) {
 		var m = $t.get_mouse_coords(ev);
 		var intersects = (new THREE.Raycaster(this.camera.position,
@@ -712,6 +750,7 @@
 		if (intersects.length) return intersects[0].object.userData;
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.draw_selector = function() {
 		this.clear();
 		var step = this.w / 4.5;
@@ -737,6 +776,7 @@
 		else this.renderer.render(this.scene, this.camera);
 	}
 
+	// TODO: what does this do?
 	function throw_dices(box, vector, boost, dist, notation_getter, before_roll, after_roll) {
 		var uat = $t.dice.use_adapvite_timestep;
 		function roll(request_results) {
@@ -758,6 +798,7 @@
 		else roll();
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.bind_mouse = function(container, notation_getter, before_roll, after_roll) {
 		var box = this;
 		$t.bind(container, ['mousedown', 'touchstart'], function(ev) {
@@ -783,6 +824,7 @@
 		});
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.bind_throw = function(button, notation_getter, before_roll, after_roll) {
 		var box = this;
 		$t.bind(button, ['mouseup', 'touchend'], function(ev) {
@@ -791,6 +833,7 @@
 		});
 	}
 
+	// TODO: what does this do?
 	this.dice_box.prototype.start_throw = function(notation_getter, before_roll, after_roll) {
 		var box = this;
 		if (box.rolling) return;
@@ -802,4 +845,5 @@
 		});
 	}
 
+// TODO: what does this do?
 }).apply(teal.dice = teal.dice || {});

@@ -1,8 +1,10 @@
 "use strict";
 
+// TODO: what does this do?
 function dice_initialize(container) {
 	$t.remove($t.id('loading_text'));
 
+	// TODO: what does this do?
 	var canvas = $t.id('canvas');
 	canvas.style.width = window.innerWidth - 1 + 'px';
 	canvas.style.height = window.innerHeight - 1 + 'px';
@@ -12,8 +14,10 @@ function dice_initialize(container) {
 	var info_div = $t.id('info_div');
 	on_set_change();
 
+	// TODO: what does this do?
 	$t.dice.use_true_random = false;
 
+	// TODO: what does this do?
 	function on_set_change(ev) { set.style.width = set.value.length + 3 + 'ex'; }
 	$t.bind(set, 'keyup', on_set_change);
 	$t.bind(set, 'mousedown', function(ev) { ev.stopPropagation(); });
@@ -21,27 +25,32 @@ function dice_initialize(container) {
 	$t.bind(set, 'focus', function(ev) { $t.set(container, { class: '' }); });
 	$t.bind(set, 'blur', function(ev) { $t.set(container, { class: 'noselect' }); });
 
+	// TODO: what does this do?
 	$t.bind($t.id('clear'), ['mouseup', 'touchend'], function(ev) {
 		ev.stopPropagation();
 		set.value = '0';
 		on_set_change();
 	});
 
+	// TODO: what does this do?
 	var box = new $t.dice.dice_box(canvas, { w: 500, h: 300 });
 	box.animate_selector = false;
 
+	// TODO: what does this do?
 	$t.bind(window, 'resize', function() {
 		canvas.style.width = window.innerWidth - 1 + 'px';
 		canvas.style.height = window.innerHeight - 1 + 'px';
 		box.reinit(canvas, { w: 500, h: 300 });
 	});
 
+	// TODO: what does this do?
 	function show_selector() {
 		info_div.style.display = 'none';
 		selector_div.style.display = 'inline-block';
 		box.draw_selector();
 	}
 
+	// TODO: what does this do?
 	function before_roll(vectors, notation, callback) {
 		info_div.style.display = 'none';
 		selector_div.style.display = 'none';
@@ -51,10 +60,12 @@ function dice_initialize(container) {
 		callback();
 	}
 
+	// TODO: what does this do?
 	function notation_getter() {
 		return $t.dice.parse_notation(set.value);
 	}
 
+	// TODO: what does this do?
 	function after_roll(notation, result) {
 		var res = result.join(' ');
 		if (notation.constant) res += ' +' + notation.constant;
@@ -64,9 +75,11 @@ function dice_initialize(container) {
 		info_div.style.display = 'inline-block';
 	}
 
+	// TODO: what does this do?
 	box.bind_mouse(container, notation_getter, before_roll, after_roll);
 	box.bind_throw($t.id('throw'), notation_getter, before_roll, after_roll);
 
+	// TODO: what does this do?
 	$t.bind(container, ['mouseup'], function(ev) {
 		ev.stopPropagation();
 		if (selector_div.style.display == 'none') {
@@ -83,6 +96,7 @@ function dice_initialize(container) {
 		}
 	});
 
+	// TODO: what does this do?
 	var params = $t.get_url_params();
 	if (params.notation) {
 		set.value = params.notation;
